@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: admission-webhook
+  labels:
+    serve: hook
+spec:
+  containers:
+    - image: golang:alpine3.11
+      name: webhook
+      command: ["/bin/sh"]
+      args: ["-c", "tail -f /dev/null"]
+      volumeMounts:
+        - mountPath: /go
+          name: volume
+#        - name: webhook-tls-certs
+#          mountPath: /run/secrets/tls
+#          readOnly: true
+  nodeSelector:
+    kubernetes.io/os: linux
+    node-role.kubernetes.io/master: ""
+  volumes:
+    - name: volume
+      hostPath:
+        path: /home/go
+        type: Directory
+#    - name: webhook-tls-certs
+#      secret:
+#        secretName: webhook-server-tls
+  tolerations:
+    - effect: NoSchedule
+      operator: Exists

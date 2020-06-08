@@ -1,0 +1,22 @@
+apiVersion: admissionregistration.k8s.io/v1beta1
+# apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: "admissionwebhook"
+webhooks:
+  - name: "admissionwebhook.default.svc"
+    rules:
+      - apiGroups:   [""]
+        apiVersions: ["v1"]
+        operations:  ["CREATE"]
+        resources:   ["pods"]
+        scope: "*"
+    clientConfig:
+      service:
+        namespace: "default"
+        name: "admissionwebhook"
+        path: "/mutating-pods"
+      caBundle: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUN1akNDQWFJQ0NRQzlaZEFjRzNMbThqQU5CZ2txaGtpRzl3MEJBUXNGQURBZk1SMHdHd1lEVlFRRERCUkIKWkcxcGMzTnBiMjRnVjJWaWFHOXZheUJEUVRBZUZ3MHlNREEyTURVd05qRTNNamRhRncweU1EQTNNRFV3TmpFMwpNamRhTUI4eEhUQWJCZ05WQkFNTUZFRmtiV2x6YzJsdmJpQlhaV0pvYjI5cklFTkJNSUlCSWpBTkJna3Foa2lHCjl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUE0RFFZZ0lzZkx0K1ZoQ3pLVmM0UFRWcm12bkNveXQxWHVRSysKa0x6VWRnVlpURDdYb0ZVSis4bUV6Q3ByK3A2OWtycmIzSURwV2tGY215bHlZNUYrR29yYTYxc0dLck1mMFUrcgo3M0EzMmFGUkgyTWxGdmhaRDV4eE1TMDRlY3ZmdEo1c0VxODZyS2d1Y1NLNGZzYklva0NBbnV4d0VEY3hZbDd4Cm5tWXYwbWxVUktNU29qR1dKaTEremZKUmJHdmhadXdWZEdOMks5dTBlUlVLOUs4cmNBb0VYYnNzY0dUMExvRnoKM2s1UFV3TklFako2UWFSLzdKQzltakRzR0tXUmtNVXBvc0dkT1VFYlBIUDRWbGlWYU1zN2dHTlFtaVZDZXp3awpteVZlcDNaWG9FR2lsQmo1UlcwNTgwQkttbXZESDV1bm9UZmpQb3N5NjZaNmIzanpmd0lEQVFBQk1BMEdDU3FHClNJYjNEUUVCQ3dVQUE0SUJBUUJCYVpERGV0b2ZmNnd1NUZjd3pSWnZ6cTI1MEUxSzdLN0xNblRIQVJpN2NKVncKQ0RSY2J6QTh3V0dUVklqVXhrdFFLTlNGNmVESllMaEVjUHNraldGR2Q1SVdsRTR1TTdrSlV2L0g2aVFueVcxeApnUFNMSG9zZTRPYjRYYXprbWt0Y2RSenVhdXlYRUtvbmN1QXJ3UjJTcy9tM2txOCtvcWQxTW96cDBFc0VHUDBBCjY5RnB0Z1pNVEhGdWhuSzg1bS9UeHdhYkZleWNDV0FnMnpaOHVvODE0dWx3WjkwUm5WZkt3b1dXUDNTK2tvSmYKNlhjUUp1WnppVVlTSnZqWlp6VEc5cGhCTk9KYnUrRk1xcnNoYUZ5bGJjNkU5aWxKUlB6VmpWM0NVc25qNXNvcgpiSHBBaG1RQmR5K1g4UTRNb01pUmNqalppNC9rMFJWWEgyampDQUhhCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+    admissionReviewVersions: ["v1", "v1beta1"]
+    sideEffects: None
+    timeoutSeconds: 5
